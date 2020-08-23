@@ -34,6 +34,12 @@ public class CovidResponse {
     @SerializedName("Source")
     private String source;
 
+    @SerializedName("DevBy")
+    private String devby;
+
+    @SerializedName("SeverBy")
+    private String severBy;
+
     public int getConfirmed() {
         return confirmed;
     }
@@ -112,5 +118,21 @@ public class CovidResponse {
 
     public void setSource(String source) {
         this.source = source;
+    }
+
+    public String getDevby() {
+        return devby;
+    }
+
+    public void setDevby(String devby) {
+        this.devby = devby;
+    }
+
+    public String getSeverBy() {
+        return severBy;
+    }
+
+    public void setSeverBy(String severBy) {
+        this.severBy = severBy;
     }
 }

@@ -18,21 +18,40 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
 
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
-    private TextView mTvDate;
     private TextView mTvConfirmed;
     private TextView mTvNewConfirmed;
+    private TextView mTvRecovered;
+    private TextView mTvHospitalized;
+    private TextView mTvDeaths;
+    private TextView mTvNewRecovered;
+    private TextView mTvNewHospitalized;
+    private TextView mTvNewDeaths;
+    private TextView mTvUpdateDate;
+    private TextView mTvSource;
+    private TextView mTvDevBy;
+    private TextView mTvSeverBy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTvDate = (TextView) findViewById(R.id.textView);
-        mTvConfirmed = (TextView) findViewById(R.id.textView2);
-        mTvNewConfirmed = (TextView) findViewById(R.id.textView3);
+        mTvConfirmed = (TextView) findViewById(R.id.textView);
+        mTvRecovered = (TextView) findViewById(R.id.textView2);
+        mTvHospitalized = (TextView) findViewById(R.id.textView3);
+        mTvDeaths = (TextView) findViewById(R.id.textView4);
+        mTvNewConfirmed = (TextView) findViewById(R.id.textView5);
+        mTvNewRecovered = (TextView) findViewById(R.id.textView6);
+        mTvNewHospitalized = (TextView) findViewById(R.id.textView7);
+        mTvNewDeaths = (TextView) findViewById(R.id.textView8);
+        mTvUpdateDate = (TextView) findViewById(R.id.textView9);
+        mTvSource = (TextView) findViewById(R.id.textView10);
+        mTvDevBy = (TextView) findViewById(R.id.textView11);
+        mTvSeverBy = (TextView) findViewById(R.id.textView12);
+
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://covid19.th-stat.com/")
+                .baseUrl("https://thai-gold-api.herokuapp.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
@@ -50,9 +69,19 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onSuccess(CovidResponse covidResponse) {
-                        mTvDate.setText(covidResponse.getUpdateDate());
                         mTvConfirmed.setText(covidResponse.getConfirmed() + "");
+                        mTvRecovered.setText(covidResponse.getRecovered() + "");
+                        mTvHospitalized.setText(covidResponse.getHospitalized() + "");
+                        mTvDeaths.setText(covidResponse.getDeaths() + "");
                         mTvNewConfirmed.setText(covidResponse.getNewConfirmed() + "");
+                        mTvNewRecovered.setText(covidResponse.getNewRecovered() + "");
+                        mTvNewHospitalized.setText(covidResponse.getNewHospitalized() + "");
+                        mTvNewDeaths.setText(covidResponse.getNewDeaths() + "");
+                        mTvUpdateDate.setText(covidResponse.getUpdateDate() + "");
+                        mTvSource.setText(covidResponse.getSource() + "");
+                        mTvDevBy.setText(covidResponse.getDevby() + "");
+                        mTvSeverBy.setText(covidResponse.getSeverBy() + "");
+
                     }
 
                     @Override
