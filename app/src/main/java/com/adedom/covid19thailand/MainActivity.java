@@ -30,24 +30,41 @@ public class MainActivity extends AppCompatActivity {
     private TextView mTvSource;
     private TextView mTvDevBy;
     private TextView mTvSeverBy;
+    private TextView mTvStatus;
+    private TextView mTvdate;
+    private TextView mTvupdate_time;
+    private TextView mTvbuy;
+    private TextView mTvsell;
+    private TextView mTvbuy2;
+    private TextView mTvsell2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTvConfirmed = (TextView) findViewById(R.id.textView);
-        mTvRecovered = (TextView) findViewById(R.id.textView2);
-        mTvHospitalized = (TextView) findViewById(R.id.textView3);
-        mTvDeaths = (TextView) findViewById(R.id.textView4);
-        mTvNewConfirmed = (TextView) findViewById(R.id.textView5);
-        mTvNewRecovered = (TextView) findViewById(R.id.textView6);
-        mTvNewHospitalized = (TextView) findViewById(R.id.textView7);
-        mTvNewDeaths = (TextView) findViewById(R.id.textView8);
-        mTvUpdateDate = (TextView) findViewById(R.id.textView9);
-        mTvSource = (TextView) findViewById(R.id.textView10);
-        mTvDevBy = (TextView) findViewById(R.id.textView11);
-        mTvSeverBy = (TextView) findViewById(R.id.textView12);
+        mTvStatus= (TextView) findViewById(R.id.textView);
+        mTvdate= (TextView) findViewById(R.id.textView2);
+        mTvupdate_time= (TextView) findViewById(R.id.textView3);
+        mTvbuy= (TextView) findViewById(R.id.textView4);
+        mTvsell= (TextView) findViewById(R.id.textView5);
+        mTvbuy2= (TextView) findViewById(R.id.textView6);
+        mTvsell2= (TextView) findViewById(R.id.textView7);
+
+
+
+//        mTvConfirmed = (TextView) findViewById(R.id.textView);
+//        mTvRecovered = (TextView) findViewById(R.id.textView2);
+//        mTvHospitalized = (TextView) findViewById(R.id.textView3);
+//        mTvDeaths = (TextView) findViewById(R.id.textView4);
+//        mTvNewConfirmed = (TextView) findViewById(R.id.textView5);
+//        mTvNewRecovered = (TextView) findViewById(R.id.textView6);
+//        mTvNewHospitalized = (TextView) findViewById(R.id.textView7);
+//        mTvNewDeaths = (TextView) findViewById(R.id.textView8);
+//        mTvUpdateDate = (TextView) findViewById(R.id.textView9);
+//        mTvSource = (TextView) findViewById(R.id.textView10);
+//        mTvDevBy = (TextView) findViewById(R.id.textView11);
+//        mTvSeverBy = (TextView) findViewById(R.id.textView12);
 
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -56,31 +73,39 @@ public class MainActivity extends AppCompatActivity {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
 
-        Covid19Api api = retrofit.create(Covid19Api.class);
+        Gold api = retrofit.create(Gold.class);
 
-        api.fetchCovid19()
+        api.fetchGold()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<CovidResponse>() {
+                .subscribe(new SingleObserver<GoldResponse>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         compositeDisposable.add(d);
                     }
 
                     @Override
-                    public void onSuccess(CovidResponse covidResponse) {
-                        mTvConfirmed.setText(covidResponse.getConfirmed() + "");
-                        mTvRecovered.setText(covidResponse.getRecovered() + "");
-                        mTvHospitalized.setText(covidResponse.getHospitalized() + "");
-                        mTvDeaths.setText(covidResponse.getDeaths() + "");
-                        mTvNewConfirmed.setText(covidResponse.getNewConfirmed() + "");
-                        mTvNewRecovered.setText(covidResponse.getNewRecovered() + "");
-                        mTvNewHospitalized.setText(covidResponse.getNewHospitalized() + "");
-                        mTvNewDeaths.setText(covidResponse.getNewDeaths() + "");
-                        mTvUpdateDate.setText(covidResponse.getUpdateDate() + "");
-                        mTvSource.setText(covidResponse.getSource() + "");
-                        mTvDevBy.setText(covidResponse.getDevby() + "");
-                        mTvSeverBy.setText(covidResponse.getSeverBy() + "");
+                    public void onSuccess(GoldResponse goldresponse) {
+                        mTvStatus.setText(goldresponse.getStatus() + "");
+                        mTvdate.setText(goldresponse.getObjectResponse().getDate() + "");
+                        mTvupdate_time.setText(goldresponse.getObjectResponse().getUpdate_time() + "");
+                        mTvbuy.setText(goldresponse.getObjectResponse().getObjectPrice().getObjectGold().getBuy() + "");
+                        mTvsell.setText(goldresponse.getObjectResponse().getObjectPrice().getObjectGold().getSell() + "");
+                        mTvbuy2.setText(goldresponse.getObjectResponse().getObjectPrice().getObjectGoldBar().getBuy() + "");
+                        mTvsell2.setText(goldresponse.getObjectResponse().getObjectPrice().getObjectGoldBar().getSell() + "");
+
+
+//                        mTvRecovered.setText(covidResponse.getRecovered() + "");
+//                        mTvHospitalized.setText(covidResponse.getHospitalized() + "");
+//                        mTvDeaths.setText(covidResponse.getDeaths() + "");
+//                        mTvNewConfirmed.setText(covidResponse.getNewConfirmed() + "");
+//                        mTvNewRecovered.setText(covidResponse.getNewRecovered() + "");
+//                        mTvNewHospitalized.setText(covidResponse.getNewHospitalized() + "");
+//                        mTvNewDeaths.setText(covidResponse.getNewDeaths() + "");
+//                        mTvUpdateDate.setText(covidResponse.getUpdateDate() + "");
+//                        mTvSource.setText(covidResponse.getSource() + "");
+//                        mTvDevBy.setText(covidResponse.getDevby() + "");
+//                        mTvSeverBy.setText(covidResponse.getSeverBy() + "");
 
                     }
 
