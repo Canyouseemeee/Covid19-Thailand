@@ -1,11 +1,11 @@
 package com.adedom.covid19thailand;
 
-import retrofit2.Call;
+import io.reactivex.Single;
 import retrofit2.http.GET;
 
 public interface Covid19Api {
 
     @GET("/api/open/today")
-    Call<CovidResponse> fetchCovid19();
+    Single<CovidResponse> fetchCovid19();
 
 }
