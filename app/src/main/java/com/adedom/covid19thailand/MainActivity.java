@@ -1,6 +1,7 @@
 package com.adedom.covid19thailand;
 
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,11 +18,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
 
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
+    private TextView mTvDate;
+    private TextView mTvConfirmed;
+    private TextView mTvNewConfirmed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mTvDate = (TextView) findViewById(R.id.textView);
+        mTvConfirmed = (TextView) findViewById(R.id.textView2);
+        mTvNewConfirmed = (TextView) findViewById(R.id.textView3);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://covid19.th-stat.com/")
@@ -42,8 +50,9 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void onSuccess(CovidResponse covidResponse) {
-                        String confirm = covidResponse.getConfirmed() + "";
-                        Toast.makeText(getBaseContext(), confirm, Toast.LENGTH_LONG).show();
+                        mTvDate.setText(covidResponse.getUpdateDate());
+                        mTvConfirmed.setText(covidResponse.getConfirmed() + "");
+                        mTvNewConfirmed.setText(covidResponse.getNewConfirmed() + "");
                     }
 
                     @Override
